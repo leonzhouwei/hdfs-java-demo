@@ -41,7 +41,7 @@ public class HdfsFileWriter {
 		// Hadoop DFS deals with Path
 		Path outFile = new Path(Config.URI);
 
-		// Check if input/output are valid
+		// Check if output is valid
 		if (fs.exists(outFile)) {
 			printAndExit("Output already exists");
 		}
@@ -57,7 +57,7 @@ public class HdfsFileWriter {
 				out.write(buffer, 0, bytesRead);
 			}
 		} catch (IOException e) {
-			System.out.println("Error while copying file");
+			System.out.println("Error while writing file");
 		} finally {
 			out.close();
 		}

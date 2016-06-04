@@ -39,7 +39,7 @@ public class HdfsFileReader {
 		// Hadoop DFS deals with Path
 		Path inFile = new Path(Config.URI);
 
-		// Check if input/output are valid
+		// Check if input is valid
 		if (!fs.exists(inFile)) {
 			printAndExit("Input file not found");
 		}

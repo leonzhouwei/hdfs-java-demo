@@ -52,12 +52,11 @@ public class HdfsFileReader {
 		byte buffer[] = new byte[256];
 		StringBuilder sb = new StringBuilder();
 		try {
-			int bytesRead = 0;
-			while ((bytesRead = in.read(buffer)) > 0) {
+			while (in.read(buffer) != -1) {
 				sb.append(new String(buffer));
 			}
-			System.out.println(bytesRead);
 			System.out.println(sb.toString());
+			System.out.println("reading " + Config.URI + " done");
 		} finally {
 			in.close();
 		}

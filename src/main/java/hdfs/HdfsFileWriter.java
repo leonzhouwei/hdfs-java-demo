@@ -56,6 +56,7 @@ public class HdfsFileWriter {
 			while ((bytesRead = in.read(buffer)) != -1) {
 				out.write(buffer, 0, bytesRead);
 			}
+			System.out.println("writing " + Config.URI + " done");
 		} catch (IOException e) {
 			System.out.println("Error while writing file");
 		} finally {

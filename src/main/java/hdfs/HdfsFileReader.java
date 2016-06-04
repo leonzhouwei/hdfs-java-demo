@@ -64,8 +64,6 @@ public class HdfsFileReader {
 			}
 			System.out.println(bytesRead);
 			System.out.println(sb.toString());
-		} catch (IOException e) {
-			System.out.println("Error while copying file");
 		} finally {
 			in.close();
 		}

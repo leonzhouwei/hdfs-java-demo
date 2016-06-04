@@ -17,15 +17,17 @@ package hdfs;
  * limitations under the License.
  */
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-public class HdfsFileReader {
+public class HdfsFileWriter {
 
 	static void printAndExit(String str) {
 		System.err.println(str);
@@ -37,29 +39,27 @@ public class HdfsFileReader {
 		FileSystem fs = FileSystem.get(URI.create(Config.URI), conf);
 
 		// Hadoop DFS deals with Path
-		Path inFile = new Path(Config.URI);
+		Path outFile = new Path(Config.URI);
 
 		// Check if input/output are valid
-		if (!fs.exists(inFile)) {
-			printAndExit("Input file not found");
-		}
-		if (!fs.isFile(inFile)) {
-			printAndExit("Input should be a file");
+		if (fs.exists(outFile)) {
+			printAndExit("Output already exists");
 		}
 
-		// Read from the file
-		FSDataInputStream in = fs.open(inFile);
+		// Write to the new file
+		String text = "Hello from HdfsFileWriter!";
+		InputStream in = new ByteArrayInputStream(text.getBytes());
+		FSDataOutputStream out = fs.create(outFile);
 		byte buffer[] = new byte[256];
-		StringBuilder sb = new StringBuilder();
 		try {
 			int bytesRead = 0;
-			while ((bytesRead = in.read(buffer)) > 0) {
-				sb.append(new String(buffer));
+			while ((bytesRead = in.read(buffer)) != -1) {
+				out.write(buffer, 0, bytesRead);
 			}
-			System.out.println(bytesRead);
-			System.out.println(sb.toString());
+		} catch (IOException e) {
+			System.out.println("Error while copying file");
 		} finally {
-			in.close();
+			out.close();
 		}
 	}
 }

@@ -65,12 +65,15 @@ public class HadoopDFSFileReadWrite {
 		FSDataInputStream in = fs.open(inFile);
 //		FSDataOutputStream out = fs.create(outFile);
 		byte buffer[] = new byte[256];
+		StringBuilder sb = new StringBuilder();
 		try {
 			int bytesRead = 0;
 			while ((bytesRead = in.read(buffer)) > 0) {
 //				out.write(buffer, 0, bytesRead);
-				System.out.println(bytesRead + "" + new String(buffer));
+				sb.append(new String(buffer));
 			}
+			System.out.println(bytesRead);
+			System.out.println(sb.toString());
 		} catch (IOException e) {
 			System.out.println("Error while copying file");
 		} finally {

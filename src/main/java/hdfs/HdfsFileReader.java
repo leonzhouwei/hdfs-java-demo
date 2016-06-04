@@ -25,7 +25,7 @@ import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-public class HadoopDFSFileReadWrite {
+public class HdfsFileReader {
 
 	static void usage() {
 		System.out.println("Usage : HadoopDFSFileReadWrite <inputfile> <output file>");
@@ -42,14 +42,9 @@ public class HadoopDFSFileReadWrite {
 		Configuration conf = new Configuration();
 		FileSystem fs = FileSystem.get(URI.create(uri), conf);
 
-//		if (argv.length != 2) {
-//			usage();
-//		}
 		// Hadoop DFS deals with Path
-//		Path inFile = new Path(argv[0]);
 		Path inFile = new Path(uri);
-//		Path outFile = new Path(argv[1]);
-
+		
 		// Check if input/output are valid
 		if (!fs.exists(inFile)) {
 			printAndExit("Input file not found");
@@ -57,19 +52,14 @@ public class HadoopDFSFileReadWrite {
 		if (!fs.isFile(inFile)) {
 			printAndExit("Input should be a file");
 		}
-//		if (fs.exists(outFile)) {
-//			printAndExit("Output already exists");
-//		}
 
-		// Read from and write to new file
+		// Read from the file
 		FSDataInputStream in = fs.open(inFile);
-//		FSDataOutputStream out = fs.create(outFile);
 		byte buffer[] = new byte[256];
 		StringBuilder sb = new StringBuilder();
 		try {
 			int bytesRead = 0;
 			while ((bytesRead = in.read(buffer)) > 0) {
-//				out.write(buffer, 0, bytesRead);
 				sb.append(new String(buffer));
 			}
 			System.out.println(bytesRead);
@@ -78,7 +68,6 @@ public class HadoopDFSFileReadWrite {
 			System.out.println("Error while copying file");
 		} finally {
 			in.close();
-//			out.close();
 		}
 	}
 }

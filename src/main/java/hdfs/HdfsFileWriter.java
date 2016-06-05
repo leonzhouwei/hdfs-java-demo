@@ -61,6 +61,7 @@ public class HdfsFileWriter {
 			System.out.println("Error while writing file");
 		} finally {
 			out.close();
+			fs.close();
 		}
 	}
 }

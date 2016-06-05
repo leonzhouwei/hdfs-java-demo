@@ -16,6 +16,13 @@
 			<artifactId>hadoop-client</artifactId>
 			<version>2.6.4</version>
 		</dependency>
+
+		<!-- http://mvnrepository.com/artifact/commons-net/commons-net -->
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.3</version>
+		</dependency>
 	</dependencies>
 
 </project>
